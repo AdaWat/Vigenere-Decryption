@@ -12,7 +12,7 @@ def get_index_of_coincidence(text):
 def decipher(text):
     # Deduce the key using the index of coincidence
     if len(text) < 28:
-        Exception("Cipher text is too short")
+        raise Exception("Cipher text is too short")
     columns = []
     ics = []
     for x in range(1, 14):
@@ -20,8 +20,9 @@ def decipher(text):
         cols = []
         for i in range(x):
             column = "".join([text[j] for j in range(len(text)) if j % x == i])
-            cols.append(column)
-            delta_bar_ic += get_index_of_coincidence(column)
+            if len(column) > 1:
+                cols.append(column)
+                delta_bar_ic += get_index_of_coincidence(column)
         delta_bar_ic /= x
         ics.append(delta_bar_ic)
         if 1.5 < delta_bar_ic:
